@@ -11,7 +11,6 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -57,40 +56,6 @@ public class UsuarioDAO {
         
     }
 
-
-    public Usuario findByNome(Connection conn, String nome) throws ClassNotFoundException, SQLException {
-
-        String sql = "SELECT * FROM tb_usuario WHERE nome LIKE '"
-                + nome + "'";
-
-        ResultSet    rs = fabrica.executaQuerieResultSet(conn, sql);
-        
-        return this.extraiUsuarioResultSet(rs);
-       
-    }
-
-    public List<Usuario> findByDepartamento(Connection conn, String departamento) throws ClassNotFoundException, SQLException {
-
-        String sql = "SELECT * FROM tb_usuario WHERE departamento = '" + departamento + "';";
-
-        ResultSet rs = fabrica.executaQuerieResultSet(conn, sql);
-
-        return this.extrairListaUsuarios(rs);
-
-    }
-
-    public List<Usuario> findByDataAdmissao(Connection conn, Date dataInicial, Date dataFinal) throws ClassNotFoundException, SQLException {
-
-        String sql = "SELECT * FROM tb_usuario WHERE dataAdmissao between '" + dataInicial
-                + " AND '" + dataFinal + "';";
-
-        ResultSet rs = fabrica.executaQuerieResultSet(conn, sql);
-
-        return this.extrairListaUsuarios(rs);
-
-    }
-
-    
 
     public Usuario extraiUsuarioResultSet(ResultSet rs) throws SQLException, ClassNotFoundException {
 

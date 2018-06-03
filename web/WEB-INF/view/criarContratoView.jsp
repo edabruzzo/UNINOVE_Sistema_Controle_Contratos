@@ -59,7 +59,7 @@
             <tr>
                <td colspan="2">                   
                    <input type="submit" value="CRIAR CONTRATO" />
-                   <a href="/jdbcDependente/contratos">Cancelar</a>
+                 <a href="${pageContext.request.contextPath}/jdbcDependente/contratos">Cancelar</a>
                </td>
             </tr>
          </table>

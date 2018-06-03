@@ -43,7 +43,7 @@ public class ContratoDAO {
                 && contrato.getOrcamentoComprometido() > 50000 ){
             
                mensagem = "REGRA DE NEGÓCIO: \n"
-                + "A GESTÃO DE CONTRATOS COM VALOR SUPERIOR A R$ 50.000, " 
+                + "A GESTÃO DE CONTRATOS COM VALOR SUPERIOR A R$ 50.000,00 " 
                 +" NÃO PODE SER FEITA POR FUNCIONÁRIOS QUE NÃO TENHAM CARGO DE GESTÃO" ;  
                
                 
@@ -210,7 +210,8 @@ public class ContratoDAO {
             sql = "SELECT * FROM tb_contrato "
                     + "WHERE departamentoResponsavel = '"
                     + conexao.getUsuarioAtualmenteLogado().getDepartamento() + "'"
-                    + "OR id_funcionarioGestor = "+conexao.getUsuarioAtualmenteLogado().getIdUsuario()+";";
+                    + "OR id_funcionarioGestor = "
+                    +conexao.getUsuarioAtualmenteLogado().getIdUsuario()+";";
         }
 
         ResultSet rs = fabrica.executaQuerieResultSet(conn, sql);
@@ -247,46 +248,7 @@ public class ContratoDAO {
 
     }
 
-    public List<Contrato> findByObjeto(Connection conn, String objeto) throws ClassNotFoundException, SQLException {
-
-        String sql = "SELECT * FROM tb_contrato WHERE objetoContrato LIKE '"
-                + objeto + "';";
-
-        ResultSet rs = fabrica.executaQuerieResultSet(conn, sql);
-
-        return extraiListaContratos(conn, rs);
-
-    }
-
-    public List<Contrato> findAtivos(Connection conn) throws ClassNotFoundException, SQLException {
-
-        String sql = "SELECT * FROM tb_contrato WHERE ativo IS TRUE;";
-
-        ResultSet rs = fabrica.executaQuerieResultSet(conn, sql);
-
-        return this.extraiListaContratos(conn, rs);
-
-    }
-
-    public List<Contrato> findInativos(Connection conn) throws ClassNotFoundException, SQLException {
-
-        String sql = "SELECT * FROM tb_contrato WHERE ativo IS FALSE;";
-
-        ResultSet rs = fabrica.executaQuerieResultSet(conn, sql);
-
-        return this.extraiListaContratos(conn, rs);
-    }
-
-    public List<Contrato> findByEmpresaContratada(Connection conn, String empresaContratada) throws ClassNotFoundException, SQLException {
-
-        String sql = "SELECT * FROM tb_contrato WHERE empresaContratada = '"
-                + empresaContratada + "';";
-
-        ResultSet rs = fabrica.executaQuerieResultSet(conn, sql);
-
-        return this.extraiListaContratos(conn, rs);
-    }
-
+   
     public Contrato extraiContratoResultSet(Connection conn, ResultSet rs) throws SQLException, ClassNotFoundException {
         
         UsuarioDAO usuarioDAO = new UsuarioDAO();

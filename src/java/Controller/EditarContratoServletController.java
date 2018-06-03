@@ -91,7 +91,9 @@ public class EditarContratoServletController extends HttpServlet {
             return;
         }else if(usuarioLogado.getIdUsuario() != contrato.getFuncionarioGestor().getIdUsuario()){
         
-            errorString = "Você não é gestor do contrato e, portanto, não tem permissão para editá-lo!";
+            errorString = "Você não é gestor do contrato e, portanto, não tem permissão para editá-lo!\n"
+                    + "\n"
+                    + "O gestor deste contrato é o funcionário : "+contrato.getFuncionarioGestor().getNome();
 
              request.setAttribute("errorString", errorString);
             // 
