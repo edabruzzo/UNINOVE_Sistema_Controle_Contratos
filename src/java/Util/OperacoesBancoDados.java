@@ -69,7 +69,7 @@ public class OperacoesBancoDados {
         String sql3 = "INSERT INTO tb_contrato(objetoContrato, orcamentoComprometido, "
                 + "ATIVO, empresaContratada, departamentoResponsavel, id_FuncionarioGestor) "
                 + "VALUES('Manutenção parque tecnológico', 100000, true, "
-                + "'Organizações Tabajara Ltda.', 'Setor de Gestão de Contratos', 1);";
+                + "'Organizações Tabajara Ltda.', 'Diretoria de Administração', 1);";
 
         listaSQLs.add(sql3);
 
@@ -77,7 +77,7 @@ public class OperacoesBancoDados {
         String sql4 = "INSERT INTO tb_contrato(objetoContrato, orcamentoComprometido, "
                 + "ATIVO, empresaContratada, departamentoResponsavel, id_FuncionarioGestor) "
                 + "VALUES('Limpeza', 50000, true, "
-                + "'Organizações Tabajara Ltda.', 'Setor de Gestão de Contratos', "
+                + "'Organizações Tabajara Ltda.', 'Manutenção', "
                 + "1);";
         listaSQLs.add(sql4);
 
