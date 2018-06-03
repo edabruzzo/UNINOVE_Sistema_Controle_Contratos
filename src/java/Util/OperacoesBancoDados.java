@@ -22,7 +22,7 @@ public class OperacoesBancoDados {
 
     private String URL;
     private String USER = "root";
-    private String PASSWORD = " ";
+    private String PASSWORD = "root";
 
     public OperacoesBancoDados() {
         try {
@@ -155,7 +155,9 @@ public class OperacoesBancoDados {
         conn = this.criaConexao();
         String sqlTESTE = "SELECT 1 FROM tb_usuario LIMIT 1";
         
-        rs = this.executaQuerieResultSet(conn, sqlTESTE);
+        try{
+            rs = this.executaQuerieResultSet(conn, sqlTESTE);
+        }catch(Exception e){
         
         if(rs == null)  {
             executaBatchUpdate(conn, listaSQLs);
@@ -163,7 +165,8 @@ public class OperacoesBancoDados {
             return;
         }
         
-        return;
+    }
+        
     }
 
     public void criaBaseDados() throws ClassNotFoundException, SQLException {
