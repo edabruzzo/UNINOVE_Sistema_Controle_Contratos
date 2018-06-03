@@ -117,7 +117,8 @@ public class LoginServletController extends HttpServlet {
 
                 errorString = "Login não permitido para o usuário: "
                         + usuario.getNome() + ", com o seguinte papel: " + usuario.getPapelUsuario()
-                        + " . Usuário ativo no sistema? Resposta: " + usuario.isAtivo() + ";";
+                        + " .\n"
+                        + "Usuário não faz mais parte dos quadros deste órgão da Administração";
 
                 request.setAttribute("errorString", errorString);
 
