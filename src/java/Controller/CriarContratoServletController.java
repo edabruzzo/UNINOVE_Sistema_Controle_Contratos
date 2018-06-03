@@ -46,9 +46,34 @@ public class CriarContratoServletController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+
+
+            Usuario usuarioLogado = new ConexaoServletController().getUsuarioAtualmenteLogado();
+
+            if(!usuarioLogado.getPapelUsuario().equals("gestor")){
+                
+                String errorString = ""
+                        + "REGRA DE NEGÓCIO: \n"
+                        + "SOMENTE GESTORES PODEM CRIAR CONTRATOS\n"
+                        + "\n"
+                        + "Você não tem permissão para criar um novo contrato";
+            request.setAttribute("errorString", errorString);
+        
+        RequestDispatcher dispatcher = request.getServletContext()
+                .getRequestDispatcher("/WEB-INF/view/erroContratoView.jsp");
+        dispatcher.forward(request, response);
+                
+                
+                return;
+            }
+
+
+
         
         Connection conn = ConexaoServletController.getConexaoGuardada(request);
+
         List<Usuario> funcionarios = null;
+
         try {
             funcionarios = usuarioDAO.consultaUsuarios(conn);
         } catch (ClassNotFoundException ex) {
@@ -73,14 +98,12 @@ public class CriarContratoServletController extends HttpServlet {
         Connection conn = ConexaoServletController.getConexaoGuardada(request);
         String objetoContrato = (String) request.getParameter("objetoContrato");
         String empresaContratada = (String) request.getParameter("empresaContratada");
-        String active = (String) request.getParameter("ativo");
         String orcamento = (String) request.getParameter("orcamentoComprometido");
         String departamentoResponsavel = (String) request.getParameter("departamentoResponsavel");
         String idFuncionarioGestor = request.getParameter("id_usuario");
         
         int codigo = 0;
         double orcamentoComprometido = 0;
-        boolean ativo = false;
         int idGestor = 0;
         
         String errorString = null;
@@ -90,7 +113,6 @@ public class CriarContratoServletController extends HttpServlet {
             //NECESSÁRIO FAZER A CONVERSÃO DOS VALORES QUE VÊM DA TELA
             orcamentoComprometido = Double.parseDouble(orcamento);
             idGestor = Integer.parseInt(idFuncionarioGestor);
-            if("S".equals(active)) ativo = true;
             
         } catch (Exception e) {
          
@@ -100,7 +122,7 @@ public class CriarContratoServletController extends HttpServlet {
         }
 
         Contrato contrato = new Contrato();
-        contrato.setAtivo(ativo);
+        contrato.setAtivo(true);
         contrato.setDepartamentoResponsavel(departamentoResponsavel);
         contrato.setEmpresaContratada(empresaContratada);
         contrato.setOrcamentoComprometido(orcamentoComprometido);
@@ -123,7 +145,7 @@ public class CriarContratoServletController extends HttpServlet {
         if (errorString == null) {
             try {
             
-                contratoDAO.criarContrato(conn, contrato);
+          errorString =  contratoDAO.criarContrato(conn, contrato);
             
             } catch (SQLException e) {
                 e.printStackTrace();
@@ -138,7 +160,7 @@ public class CriarContratoServletController extends HttpServlet {
         request.setAttribute("contrato", contrato);
  
         // If error, forward to Edit page.
-        if (errorString != null) {
+        if (!errorString.contains("sucesso")) {
             RequestDispatcher dispatcher = request.getServletContext()
                     .getRequestDispatcher("/WEB-INF/view/criarContratoView.jsp");
             dispatcher.forward(request, response);
@@ -146,7 +168,14 @@ public class CriarContratoServletController extends HttpServlet {
         // If everything nice.
         // Redirect to the product listing page.
         else {
-            response.sendRedirect(request.getContextPath() + "/jdbcDependente/contratos");
+
+            // 
+            RequestDispatcher dispatcher = request.getServletContext()
+                    .getRequestDispatcher("/WEB-INF/view/erroContratoView.jsp");
+            dispatcher.forward(request, response);
+
+
+
         }
     }
  

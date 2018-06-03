@@ -17,11 +17,18 @@
         <jsp:include page="/template/_header.jsp"></jsp:include>
         <jsp:include page="/template/_menu.jsp"></jsp:include>
 
-            <h3>LISTA CONTRATOS</h3>
-        <h4><a href="${pageContext.request.contextPath}/jdbcDependente/criarContrato">Criar Contrato</a></h4>
-            <p style="color: red;">${errorString}</p>
-
-        
+      <h3>LISTA DE CONTRATOS</h3>
+      
+      <h4>REGRA DE NEGÓCIO: <br>
+        <br>
+        SE FUNCIONÁRIO É GESTOR ELE ENXERGA TODOS OS CONTRATOS,
+        INCLUSIVE DE OUTROS DEPARTAMENTOS.<br>
+        <br>
+        SE ELE NÃO FOR GESTOR, 
+        APENAS ENXERGA CONTRATOS DO SEU DEPARTAMENTO.</h4> 
+      
+      <h4 style="color: red;">${errorString}</h4>
+      
         <table border="1" cellpadding="5" cellspacing="1" >
             <tr>
                 <th>Id_Contrato</th>

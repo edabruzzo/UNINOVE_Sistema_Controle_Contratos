@@ -32,41 +32,62 @@ public class ContratoDAO {
     public String criarContrato(Connection conn, Contrato contrato) throws ClassNotFoundException, SQLException {
 
         /*REGRA DE NEGÓCIO: 
-     
-        FUNCIONÁRIO SÓ PODE CRIAR UM CONTRATO SE ELE TIVER PAPEL DE GESTOR NO SISTEMA
+            FUNCIONÁRIO SÓ PODE CRIAR UM CONTRATO SE ELE TIVER PAPEL DE GESTOR NO SISTEMA
          */
         String mensagem = null;
+        
+        //REGRA DE NEGÓCIO: A GESTÃO DE CONTRATOS SÓ PODE SER FEITA POR FUNCIONÁRIOS ATIVOS NO SISTEMA
+        if(contrato.getFuncionarioGestor().isAtivo() == true){
 
-        if (conexao.getUsuarioAtualmenteLogado().getPapelUsuario() == "gestor") {
+        if (conexao.getUsuarioAtualmenteLogado().getPapelUsuario().equals("gestor")) {
 
-            String sql = "INSERT INTO tb_contrato(objetoContrato, orcamentoComprometido, "
-                    + "ATIVO, empresaContratada, "
+            String sql = "INSERT INTO tb_contrato("
+                    + "objetoContrato, "
+                    + "orcamentoComprometido, "
+                    + "ATIVO, "
+                    + "empresaContratada, "
                     + "departamentoResponsavel, "
                     + "id_funcionarioGestor)"
                     + "VALUES ('" + contrato.getObjetoContrato()
                     + "', " + contrato.getOrcamentoComprometido()
                     + ", " + contrato.isAtivo()
                     + ", '" + contrato.getEmpresaContratada()
-                    + ", '" + contrato.getDepartamentoResponsavel()
-                    + ", '" + contrato.getFuncionarioGestor().getIdUsuario()
-                    + "');";
+                    + "', '" + contrato.getDepartamentoResponsavel()
+                    + "', " + contrato.getFuncionarioGestor().getIdUsuario()
+                    + ");";
 
             fabrica.executaQuerieUpdate(conn, sql);
 
             mensagem = "Contrato criado com sucesso";
 
         } else {
-
-            mensagem = "Você não tem permissão para criar contratos no sistema";
+            mensagem = "REGRA DE NEGÓCIO: \n" 
+                       +"UNCIONÁRIO SÓ PODE CRIAR UM CONTRATO SE ELE TIVER PAPEL DE GESTOR NO SISTEMA\n"
+                       +"Você não tem permissão para criar contratos no sistema";
         }
+        }else{
+             mensagem = "REGRA DE NEGÓCIO: \n"
+                     + "A GESTÃO DE CONTRATOS SÓ PODE SER FEITA POR FUNCIONÁRIOS ATIVOS NO SISTEMA\n"
+                     + "\n"
+                     + "O funcionário ao qual você está tentando atribuir a gestão do contrato não está ativo no sistema" ;  
+        } 
 
         return mensagem;
 
     }
 
-    public void editarContrato(Connection conn, Contrato contrato) throws ClassNotFoundException, SQLException {
+    public String editarContrato(Connection conn, Contrato contrato) throws ClassNotFoundException, SQLException {
+        
+        
+        String mensagem = null;
+        //    REGRA DE NEGÓCIO: FUNCIONÁRIO SÓ PODE EDITAR UM CONTRATO SE ELE FOR GESTOR DO CONTRATO ESPECÍFICO
 
-        //    REGRA DE NEGÓCIO: FUNCIONÁRIO SÓ PODE EDITAR UM CONTRATO SE ELE FOR GESTOR DO CONTRATO
+        
+        
+        //REGRA DE NEGÓCIO: A GESTÃO DE CONTRATOS SÓ PODE SER FEITA POR FUNCIONÁRIOS ATIVOS NO SISTEMA
+        if(contrato.getFuncionarioGestor().isAtivo() == true){
+
+        
         String sql1 = "UPDATE tb_contrato "
                 + "SET objetoContrato = '" + contrato.getObjetoContrato()
                 + "', orcamentoComprometido = " + contrato.getOrcamentoComprometido()
@@ -74,9 +95,30 @@ public class ContratoDAO {
                 + ", empresaContratada = '" + contrato.getEmpresaContratada()
                 + "', departamentoResponsavel = '" + contrato.getDepartamentoResponsavel()
                 + "', id_funcionarioGestor = " + contrato.getFuncionarioGestor().getIdUsuario()
-                + " WHERE idContrato = " + contrato.getIdContrato() + ";";
-
+                + " WHERE id_contrato = " + contrato.getIdContrato() + ";";
+        try{
         fabrica.executaQuerieUpdate(conn, sql1);
+        mensagem = "Contrato editado com sucesso";    
+        
+        }catch(Exception ex){
+            
+        ex.printStackTrace();
+        mensagem = ex.getMessage();
+        
+        }
+        }else{
+            
+          mensagem = "REGRA DE NEGÓCIO: \n"
+                     + "A GESTÃO DE CONTRATOS SÓ PODE SER FEITA POR FUNCIONÁRIOS ATIVOS NO SISTEMA\n"
+                  +"\n"   
+                  + "O funcionário "
+                  + "("+contrato.getFuncionarioGestor().getNome()+") "
+                  + "ao qual você está tentando atribuir a gestão"
+                  + " do contrato não está ativo no sistema" ;  
+        
+        }
+        return mensagem;
+        
     }
 
     public String removerContrato(Connection conn, Contrato contrato) throws SQLException, ClassNotFoundException {
@@ -101,7 +143,13 @@ public class ContratoDAO {
 
         } else {
 
-            mensagem = "Você não tem permissão para remover o contrato";
+            mensagem = "REGRA DE NEGÓCIO:\n" +
+"        \n" +
+"        APENAS O GESTOR DO CONTRATO, QUE NESTE CONTRATO É O FUNCIONÁRIO"
+                    + " "+contrato.getFuncionarioGestor().getNome()+" "
+                    + "PODE EXCLUIR UM CONTRATO\n"
+         
+        + "Você não tem permissão para remover o contrato";
 
         }
 
@@ -118,7 +166,8 @@ public class ContratoDAO {
         SE FUNCIONÁRIO É GESTOR ELE ENXERGA TODOS OS CONTRATOS,
         INCLUSIVE DE OUTROS DEPARTAMENTOS.
         SE ELE NÃO FOR GESTOR, 
-        APENAS ENXERGA CONTRATOS DO SEU DEPARTAMENTO.
+        APENAS ENXERGA CONTRATOS DO SEU DEPARTAMENTO OU CONTRATOS 
+        DE OUTROS DEPARTAMENTOS EM QUE ELE É GESTOR
         
          */
         String sql = null;
@@ -128,7 +177,8 @@ public class ContratoDAO {
         } else {
             sql = "SELECT * FROM tb_contrato "
                     + "WHERE departamentoResponsavel = '"
-                    + conexao.getUsuarioAtualmenteLogado().getDepartamento() + "';";
+                    + conexao.getUsuarioAtualmenteLogado().getDepartamento() + "'"
+                    + "OR id_funcionarioGestor = "+conexao.getUsuarioAtualmenteLogado().getIdUsuario()+";";
         }
 
         ResultSet rs = fabrica.executaQuerieResultSet(conn, sql);
@@ -147,7 +197,7 @@ public class ContratoDAO {
         Contrato contrato = new Contrato();
         String sql = null;
         
-        if(conexao.getUsuarioAtualmenteLogado().getPapelUsuario() == "gestor"){
+        if(conexao.getUsuarioAtualmenteLogado().getPapelUsuario().equals("gestor")){
             
             sql = "SELECT * FROM tb_contrato WHERE id_contrato = "
                 + id + " ;";
@@ -178,7 +228,7 @@ public class ContratoDAO {
 
     public List<Contrato> findByObjeto(Connection conn, String objeto) throws ClassNotFoundException, SQLException {
 
-        String sql = "SELECT * FROM tb_contrato WHERE objeto LIKE '"
+        String sql = "SELECT * FROM tb_contrato WHERE objetoContrato LIKE '"
                 + objeto + "';";
 
         ResultSet rs = fabrica.executaQuerieResultSet(conn, sql);

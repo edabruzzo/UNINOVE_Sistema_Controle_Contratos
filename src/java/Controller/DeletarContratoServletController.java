@@ -45,15 +45,15 @@ public class DeletarContratoServletController extends HttpServlet {
          Connection conn = ConexaoServletController.getConexaoGuardada(request);
          Contrato contrato = new Contrato();
 
-         String codigoString = (String) request.getParameter("codigo");
+         String codigoString = (String) request.getParameter("idContrato");
  
-        int codigo = 0;
-        codigo = Integer.parseInt(codigoString);
+        int idContrato = 0;
+        idContrato = Integer.parseInt(codigoString);
 
         String errorString = null;
         
         try {
-            contrato = contratoDAO.findContrato(conn, codigo);
+            contrato = contratoDAO.findContrato(conn, idContrato);
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(DeletarContratoServletController.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
@@ -69,12 +69,12 @@ public class DeletarContratoServletController extends HttpServlet {
         }
          
         // If has an error, redirecte to the error page.
-        if (errorString != null) {
+        if (!errorString.contains("sucesso")) {
             // Store the information in the request attribute, before forward to views.
             request.setAttribute("errorString", errorString);
             // 
             RequestDispatcher dispatcher = request.getServletContext()
-                    .getRequestDispatcher("/WEB-INF/view/erroDeletarContratoView.jsp");
+                    .getRequestDispatcher("/WEB-INF/view/erroContratoView.jsp");
             dispatcher.forward(request, response);
         }
         // If everything nice.

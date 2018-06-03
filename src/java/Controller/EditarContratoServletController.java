@@ -14,6 +14,7 @@ import Model.Usuario;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.RequestDispatcher;
@@ -46,9 +47,23 @@ public class EditarContratoServletController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+ 
+        
+        Usuario usuarioLogado =  new ConexaoServletController().getUsuarioAtualmenteLogado();
+      
         
     Connection conn = ConexaoServletController.getConexaoGuardada(request);
+            List<Usuario> funcionarios = null;
+        try {
+            funcionarios = usuarioDAO.consultaUsuarios(conn);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(CriarContratoServletController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(CriarContratoServletController.class.getName()).log(Level.SEVERE, null, ex);
+        }
         
+        request.setAttribute("funcionarios", funcionarios);
+
         //NECESSÁRIO FAZER O PARSER DO PARÂMETRO
         String idContratoStrg = (String) request.getParameter("idContrato");
         int idContrato = 0;
@@ -62,6 +77,7 @@ public class EditarContratoServletController extends HttpServlet {
             e.printStackTrace();
             errorString = e.getMessage();
         } catch (ClassNotFoundException ex) {
+            
             Logger.getLogger(EditarContratoServletController.class.getName()).log(Level.SEVERE, null, ex);
         }
  
@@ -69,10 +85,23 @@ public class EditarContratoServletController extends HttpServlet {
         // The contrato does not exist to edit.
         // Redirect to contratos page.
         if (errorString != null && contrato == null) {
+            
+             request.setAttribute("errorString", errorString);
             response.sendRedirect(request.getServletPath() + "/jdbcDependente/contratos");
             return;
+        }else if(usuarioLogado.getIdUsuario() != contrato.getFuncionarioGestor().getIdUsuario()){
+        
+            errorString = "Você não é gestor do contrato e, portanto, não tem permissão para editá-lo!";
+
+             request.setAttribute("errorString", errorString);
+            // 
+            RequestDispatcher dispatcher = request.getServletContext()
+                    .getRequestDispatcher("/WEB-INF/view/erroContratoView.jsp");
+            dispatcher.forward(request, response);
+
+            return;
+            
         }
- 
         // Store errorString in request attribute, before forward to views.
         request.setAttribute("errorString", errorString);
         request.setAttribute("contrato", contrato);
@@ -91,14 +120,15 @@ public class EditarContratoServletController extends HttpServlet {
         
         Connection conn = ConexaoServletController.getConexaoGuardada(request);
     
+        String codigoContrato = (String) request.getParameter("idContrato");
         String objetoContrato = (String) request.getParameter("objetoContrato");
         String empresaContratada = (String) request.getParameter("empresaContratada");
         String active = (String) request.getParameter("ativo");
         String orcamento = (String) request.getParameter("orcamentoComprometido");
         String departamentoResponsavel = (String) request.getParameter("departamentoResponsavel");
-        String idFuncionarioGestor = (String)  request.getParameter("idFuncionarioGestor");
+        String idFuncionarioGestor = request.getParameter("id_usuario");
         
-        int codigo = 0;
+        int idContrato = 0;
         double orcamentoComprometido = 0;
         boolean ativo = false;
         int idGestor = 0;
@@ -108,6 +138,7 @@ public class EditarContratoServletController extends HttpServlet {
         
         try{
             //NECESSÁRIO FAZER A CONVERSÃO DOS VALORES QUE VÊM DA TELA
+            idContrato = Integer.parseInt(codigoContrato);
             orcamentoComprometido = Double.parseDouble(orcamento);
             idGestor = Integer.parseInt(idFuncionarioGestor);
             if("S".equals(active)) ativo = true;
@@ -120,6 +151,7 @@ public class EditarContratoServletController extends HttpServlet {
         }
 
         Contrato contrato = new Contrato();
+        contrato.setIdContrato(idContrato);
         contrato.setAtivo(ativo);
         contrato.setDepartamentoResponsavel(departamentoResponsavel);
         contrato.setEmpresaContratada(empresaContratada);
@@ -143,7 +175,7 @@ public class EditarContratoServletController extends HttpServlet {
         if (errorString == null) {
             try {
             
-                contratoDAO.editarContrato(conn, contrato);
+            errorString =  contratoDAO.editarContrato(conn, contrato);
             
             } catch (SQLException e) {
                 e.printStackTrace();
@@ -158,15 +190,19 @@ public class EditarContratoServletController extends HttpServlet {
         request.setAttribute("contrato", contrato);
  
         // If error, forward to Edit page.
-        if (errorString != null) {
+        if (!errorString.contains("sucesso")) {
+        
             RequestDispatcher dispatcher = request.getServletContext()
-                    .getRequestDispatcher("/WEB-INF/view/editarContratoView.jsp");
+                    .getRequestDispatcher("/WEB-INF/view/erroContratoView.jsp");
             dispatcher.forward(request, response);
-        }
-        // If everything nice.
-        // Redirect to the product listing page.
-        else {
-            response.sendRedirect(request.getContextPath() + "/jdbcDependente/contratos");
+        }else{
+            
+          RequestDispatcher dispatcher = request.getServletContext()
+                .getRequestDispatcher("/WEB-INF/view/contratosView.jsp");
+        dispatcher.forward(request, response);
+
+            
+            
         }
     }
  

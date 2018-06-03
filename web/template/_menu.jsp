@@ -17,6 +17,8 @@
    |
    <a href="${pageContext.request.contextPath}/jdbcDependente/login">Login</a>
    |
+   <a href="${pageContext.request.contextPath}/jdbcDependente/criarContrato">Criar Novo Contrato</a>
+   |
    <a href="${pageContext.request.contextPath}/logout">Logout</a>
 
     </h3>

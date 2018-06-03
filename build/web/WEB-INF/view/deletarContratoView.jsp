@@ -19,13 +19,16 @@
     <jsp:include page="/template/_header.jsp"></jsp:include>
     <jsp:include page="/template/_menu.jsp"></jsp:include>
     
-    <h3>Deletar Contrato</h3>
-     <p style="color: red;">${errorString}</p>
+      <h3>Deletar Contrato</h3>
+      
+      <h4>REGRA DE NEGÓCIO: FUNCIONÁRIO SÓ PODE DELETAR UM CONTRATO SE ELE FOR GESTOR DO CONTRATO</h4> 
+      
+      <h5 style="color: red;">${errorString}</h5>
  
       <c:if test="${not empty contrato}">
          <form method="POST" action="${pageContext.request.contextPath}/jdbcDependente/deletarContrato">
-            <input type="hidden" name="codigo" value="${contrato.codigo}" />
-                      <input type="submit" value="DELETAR" />
+            <input type="hidden" name="idContrato" value="${contrato.idContrato}" />
+                      <input type="submit" value="DELETAR CONTRATO" />
                       <a href="${pageContext.request.contextPath}/jdbcDependente/contratos">Cancelar</a>
                  
          </form>

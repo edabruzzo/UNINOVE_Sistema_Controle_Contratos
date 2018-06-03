@@ -113,9 +113,55 @@ public class OperacoesBancoDados {
                 + "VALUES ('Beltrano', 'Diretoria', '2018-01-01', "
                 + "false, 'beltrano', '123', 'gestor');";
         listaSQLs.add(sql9);
-        
-        executaBatchUpdate(this.criaConexao(), listaSQLs);
 
+         
+
+        String sql10 = "INSERT INTO tb_contrato"
+                + "(objetoContrato, "
+                + "orcamentoComprometido, "
+                + "ATIVO, "
+                + "empresaContratada, "
+                + "departamentoResponsavel, "
+                + "id_funcionarioGestor)"
+                + "VALUES ('Manutenção Predial', 55000, true, 'WCA Ltda.', 'Manutenção', 2);";
+        listaSQLs.add(sql10);
+        
+        
+        String sql11 = "INSERT INTO tb_contrato"
+                + "(objetoContrato, "
+                + "orcamentoComprometido, "
+                + "ATIVO, "
+                + "empresaContratada, "
+                + "departamentoResponsavel, "
+                + "id_funcionarioGestor)"
+                + "VALUES ('Fornecimento de impressoras multifuncionais', 67000, true, 'Orion Ltda.', 'Departamnto de TI', 1);";
+        listaSQLs.add(sql11);
+        
+        String sql12 = "INSERT INTO tb_contrato"
+                + "(objetoContrato, "
+                + "orcamentoComprometido, "
+                + "ATIVO, "
+                + "empresaContratada, "
+                + "departamentoResponsavel, "
+                + "id_funcionarioGestor)"
+                + "VALUES ('Fornecimento de computadores', 2750000, true, 'NETUNO Ltda.', 'Departamnto de TI', 2);";
+        listaSQLs.add(sql12);
+
+        Connection conn = null;
+        ResultSet rs = null;
+            
+        conn = this.criaConexao();
+        String sqlTESTE = "SELECT 1 FROM tb_usuario LIMIT 1";
+        
+        rs = this.executaQuerieResultSet(conn, sqlTESTE);
+        
+        if(rs == null)  {
+            executaBatchUpdate(conn, listaSQLs);
+        }else{
+            return;
+        }
+        
+        return;
     }
 
     public void criaBaseDados() throws ClassNotFoundException, SQLException {
@@ -133,7 +179,7 @@ public class OperacoesBancoDados {
             conn = DriverManager.getConnection(URL, USER, PASSWORD);
             stmt = conn.createStatement();
             conn.setAutoCommit(false);
-            stmt.execute("CREATE DATABASE IF NOT EXISTS controleFinanceiroUNINOVE");
+            stmt.execute("CREATE DATABASE IF NOT EXISTS sistemaControleContratos");
             conn.commit();
         } catch (SQLException ex) {
             conn.rollback();
@@ -148,7 +194,7 @@ public class OperacoesBancoDados {
 
     public Connection criaConexao()  {
 
-        this.setURL("jdbc:mysql://localhost:3306/controleFinanceiroUNINOVE");
+        this.setURL("jdbc:mysql://localhost:3306/sistemaControleContratos");
 
         Connection conn = null;
         Statement stmt = null;
@@ -245,7 +291,7 @@ public class OperacoesBancoDados {
            System.out.println("Executada com sucesso!");
 
         } catch (SQLException ex) {
-
+            ex.printStackTrace();
             System.out.println("Query não executada! Efetuando rollback");
             conn.rollback();
             Logger.getLogger(OperacoesBancoDados.class.getName()).log(Level.SEVERE, null, ex);
@@ -311,9 +357,9 @@ public class OperacoesBancoDados {
             conn = DriverManager.getConnection(URL, USER, PASSWORD);
             stmt = conn.createStatement();
             conn.setAutoCommit(false);
-            System.out.println("DELETANDO BASE DE DADOS controleFinanceiroUNINOVE");
-            stmt.execute("DROP DATABASE IF EXISTS controleFinanceiroUNINOVE");
-            System.out.println("BASE DE DADOS controleFinanceiroUNINOVE DELETADA COM SUCESSO!");
+            System.out.println("DELETANDO BASE DE DADOS sistemaControleContratos");
+            stmt.execute("DROP DATABASE IF EXISTS sistemaControleContratos");
+            System.out.println("BASE DE DADOS sistemaControleContratos DELETADA COM SUCESSO!");
             conn.commit();
         } catch (SQLException ex) {
             conn.rollback();

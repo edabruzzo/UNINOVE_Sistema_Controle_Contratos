@@ -19,10 +19,14 @@
     <jsp:include page="/template/_header.jsp"></jsp:include>
     <jsp:include page="/template/_menu.jsp"></jsp:include>
     
-    <h3>Deletar Contrato</h3>
+    <h3>Página de erro para operações em contratos</h3>
+    <br>
+    <br>
     
-    <p style="color: red;">${errorString}</p>
-    <a href="/jdbcDependente/contratos">Contratos</a>
+    <h3 style="color: red;">${errorString}</h3>
+    <br>
+    <br>
+    
     
     <jsp:include page="/template/_footer.jsp"></jsp:include>
     

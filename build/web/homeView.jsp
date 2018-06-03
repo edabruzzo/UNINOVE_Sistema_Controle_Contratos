@@ -11,7 +11,7 @@
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>Home Page</title>
+        <title>Sistema de Controle de Contratos</title>
     </head>
     <body style="background-color: activeborder">
         <jsp:include page="/template/_header.jsp"></jsp:include>
@@ -29,18 +29,7 @@
                     <li>Listagem dos usuários cadastrados</li>
                 </ul>
             </strong>
-            <form method="POST" action="${pageContext.request.contextPath}/criaInfra">
-            <input type="submit" value="CRIAR INFRAESTRUTURA"/>
-            <strong><text>
-      Se este for seu primeiro acesso, você terá que criar toda a infraestrutura do sistema.
-      Certifique-se de haver uma instância do servidor MySQL de banco de dados
-      rodando em sua máquina. Para isso, abra o gerenciador de tarefas do seu 
-      sistema operacional ou verifique na linha de comando se o serviço MySQL 
-      foi iniciado. O botão criar infraestrutura irá criar o banco de dados de 
-      nome 'controlefinanceiroUNINOVE' com as tableas 'tb_usuario' e 'tb_contrato'.
-      Inicie o serviço MYSQL e, após, clique no botão 'CRIAR INFRAESTRUTURA'.
-            </text></strong>
-        </form>
+            
         <jsp:include page="/template/_footer.jsp"></jsp:include>
  </body>
 </html>

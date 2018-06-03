@@ -17,6 +17,7 @@ public class Program {
     public static void main(String[] args) throws ClassNotFoundException, SQLException {
         
         new OperacoesBancoDados().deletaBanco();
+      
         
     }
     

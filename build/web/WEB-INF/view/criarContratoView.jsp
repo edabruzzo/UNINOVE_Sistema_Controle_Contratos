@@ -21,8 +21,9 @@
       <jsp:include page="/template/_menu.jsp"></jsp:include>
        
       <h3>Criar Contrato</h3>
-       
-      <p style="color: red;">${errorString}</p>
+      
+      <br>
+      <h4 style="color: red;">${errorString}</h4>
        
       <form method="POST" action="${pageContext.request.contextPath}/jdbcDependente/criarContrato">
          <table border="0">
@@ -42,12 +43,12 @@
             
             <tr>
                <td>Departamento Responsável</td>
-               <td><input type="text" name="orcamentoComprometido" value="${contrato.departamentoResponsavel}" /></td>
+               <td><input type="text" name="departamentoResponsavel" value="${contrato.departamentoResponsavel}" /></td>
             </tr>
 
 
             <tr>
-               <td>Funcionario Gestor - PRECISO CARREGAR UMA LISTA DE USUÁRIOS PARA SEREM SELECIONADOS</td>
+               <td>Funcionario Gestor</td>
                <td> <select name="id_usuario">
           <c:forEach var="item" items="${funcionarios}">
             <option value="${item.idUsuario}">${item.nome}</option>
@@ -56,14 +57,8 @@
             </tr>
       
             <tr>
-               <td>Ativo ?</td>
-               <td><input type="radio" name="ativo" value="S" />SIM</td>
-               <td><input type="radio" name="ativo" value="N" />NÃO</td>
-
-            </tr>
-            <tr>
                <td colspan="2">                   
-                   <input type="submit" value="Submit" />
+                   <input type="submit" value="CRIAR CONTRATO" />
                    <a href="/jdbcDependente/contratos">Cancelar</a>
                </td>
             </tr>

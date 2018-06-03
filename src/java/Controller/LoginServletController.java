@@ -53,9 +53,8 @@ public class LoginServletController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        
         Connection conn = ConexaoServletController.getConexaoGuardada(request);
-        
+
         String login = request.getParameter("login");
         String password = request.getParameter("password");
 
@@ -74,56 +73,59 @@ public class LoginServletController extends HttpServlet {
                     = this.getServletContext().getRequestDispatcher("/WEB-INF/view/loginView.jsp");
             dispatcher.forward(request, response);
 
-
-                //HttpSession session = request.getSession();
-                //response.sendRedirect(request.getContextPath() + "/jdbcDependente/login");
-
-
+            //HttpSession session = request.getSession();
+            //response.sendRedirect(request.getContextPath() + "/jdbcDependente/login");
         } else {
 
             try {
                 usuario = usuarioDAO.findByLoginSenha(conn, login, password);
+
             } catch (Exception ex) {
 
                 hasError = true;
                 errorString = "Login ou password inválido!";
-                
+
                 request.setAttribute("errorString", errorString);
-                 ConexaoServletController.guardarUsuarioLogado(request.getSession(), null);
+                ConexaoServletController.guardarUsuarioLogado(request.getSession(), null);
                 // Forward to /WEB-INF/views/login.jsp
                 RequestDispatcher dispatcher //
-                = this.getServletContext().getRequestDispatcher("/WEB-INF/view/loginView.jsp");
+                        = this.getServletContext().getRequestDispatcher("/WEB-INF/view/loginView.jsp");
 
                 dispatcher.forward(request, response);
             } // If no error
             // Store usuario information in Session
             // And redirect to usuarioInfo page.
-            
+
             /*
             
             
             REGRA DE NEGÓCIO = SOMENTE USUÁRIOS ATIVOS PODEM ACESSAR O SISTEMA
             
-            */
-            if (hasError == false && usuario.getNome() != null && usuario.isAtivo()== true ) {
+             */
+            if (hasError == false && usuario.getNome() != null && usuario.isAtivo() == true) {
 
                 HttpSession session = request.getSession();
                 ConexaoServletController.guardarUsuarioLogado(session, usuario);
                 // Redirect to usuarioInfo page.
-                 //RequestDispatcher dispatcher = null;//
-        //  = this.getServletContext().getRequestDispatcher("/WEB-INF/view/usuariosInfoView.jsp");
-                         
-        //dispatcher  = this.getServletContext().getRequestDispatcher("/WEB-INF/view/usuarioTESTES.jsp");
+                //RequestDispatcher dispatcher = null;//
+                //  = this.getServletContext().getRequestDispatcher("/WEB-INF/view/usuariosInfoView.jsp");
 
-        response.sendRedirect(request.getServletPath().replace("/jdbcDependente/login", "/ProjetoUninoveMVC-JDBC/jdbcDependente/contratos"));
+                //dispatcher  = this.getServletContext().getRequestDispatcher("/WEB-INF/view/usuarioTESTES.jsp");
+                response.sendRedirect(request.getServletPath().replace("/jdbcDependente/login", "/ProjetoUninoveMVC-JDBC/jdbcDependente/contratos"));
 
-            }else if (usuario.getNome()==null){
-                
-          ConexaoServletController.guardarUsuarioLogado(request.getSession(), null);
+            } else {
+
+                errorString = "Login não permitido para o usuário: "
+                        + usuario.getNome() + ", com o seguinte papel: " + usuario.getPapelUsuario()
+                        + " . Usuário ativo no sistema? Resposta: " + usuario.isAtivo() + ";";
+
+                request.setAttribute("errorString", errorString);
+
+                ConexaoServletController.guardarUsuarioLogado(request.getSession(), null);
                 RequestDispatcher dispatcher //
-                = this.getServletContext().getRequestDispatcher("/WEB-INF/view/loginView.jsp");
+                        = this.getServletContext().getRequestDispatcher("/WEB-INF/view/loginView.jsp");
                 dispatcher.forward(request, response);
-                
+
             }
 
         }

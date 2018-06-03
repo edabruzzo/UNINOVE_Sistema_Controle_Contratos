@@ -5,7 +5,11 @@
  */
 package Controller;
 
+import Util.OperacoesBancoDados;
 import java.io.IOException;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -31,7 +35,22 @@ public class HomeServletController extends HttpServlet {
 
 
     public HomeServletController() {
-        super();
+
+       super();
+
+        try {
+        
+        new OperacoesBancoDados().criaBaseDados();
+        new OperacoesBancoDados().criaInfraestrutura();
+        
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(HomeServletController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(HomeServletController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+
+
     }
 
     // Show Login page.
@@ -39,9 +58,18 @@ public class HomeServletController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-                String url = "homeView.jsp";
-                request.getRequestDispatcher(url).forward(request, response);
-           
+             
+        try {
+            new OperacoesBancoDados().criaBaseDados();
+            new OperacoesBancoDados().criaInfraestrutura();
+            
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(HomeServletController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(HomeServletController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+           String url = "homeView.jsp";
+            request.getRequestDispatcher(url).forward(request, response);
         }
 
 }
