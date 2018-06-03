@@ -22,7 +22,7 @@ public class OperacoesBancoDados {
 
     private String URL;
     private String USER = "root";
-    private String PASSWORD = "root";
+    private String PASSWORD = " ";
 
     public OperacoesBancoDados() {
         try {
