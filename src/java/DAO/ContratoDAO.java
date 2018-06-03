@@ -45,7 +45,7 @@ public class ContratoDAO {
                mensagem = "REGRA DE NEGÓCIO: \n"
                 + "A GESTÃO DE CONTRATOS COM VALOR SUPERIOR A R$ 50.000, " 
                 +" NÃO PODE SER FEITA POR FUNCIONÁRIOS QUE NÃO TENHAM CARGO DE GESTÃO" ;  
-        
+               
                 
                 return mensagem;
 
