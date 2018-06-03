@@ -5,6 +5,7 @@
  */
 package Util;
 
+import com.mysql.jdbc.exceptions.MySQLSyntaxErrorException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -153,20 +154,33 @@ public class OperacoesBancoDados {
         ResultSet rs = null;
             
         conn = this.criaConexao();
-        String sqlTESTE = "SELECT 1 FROM tb_usuario LIMIT 1";
+        String sqlTESTE = "SELECT * FROM tb_usuario LIMIT 1";
+        
         
         try{
-            rs = this.executaQuerieResultSet(conn, sqlTESTE);
-        }catch(Exception e){
+    
+         Statement stmt = conn.createStatement();
+         
+            System.out.println("Executando a seguinte query .....");
+            System.out.println(sqlTESTE);
+            rs = stmt.executeQuery(sqlTESTE);
+            System.out.println("Executada com sucesso!");
+ 
+           
         
-        if(rs == null)  {
-            executaBatchUpdate(conn, listaSQLs);
-        }else{
-            return;
+        }catch(SQLException e){
+        
+        if(e.getMessage().contains("Table 'sistemacontrolecontratos.tb_usuario' doesn't exist")
+               || e.getMessage().contains("Table") && e.getMessage().contains("exist")){
+        
+            executaBatchUpdate(conn, listaSQLs);    
+            
+        }else {
+                return;
         }
+            
         
     }
-        
     }
 
     public void criaBaseDados() throws ClassNotFoundException, SQLException {
@@ -248,9 +262,6 @@ public class OperacoesBancoDados {
         } catch (SQLException ex) {
             System.out.println("Query não executada!");
             Logger.getLogger(OperacoesBancoDados.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {
-
-           
         }
 
         return rs;
