@@ -50,7 +50,6 @@ public class HomeServletController extends HttpServlet {
         }
 
 
-
     }
 
     // Show Login page.

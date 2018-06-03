@@ -174,8 +174,6 @@ public class CriarContratoServletController extends HttpServlet {
                     .getRequestDispatcher("/WEB-INF/view/erroContratoView.jsp");
             dispatcher.forward(request, response);
 
-
-
         }
     }
  

@@ -61,6 +61,7 @@ public class DeletarContratoServletController extends HttpServlet {
         }
         try {
             errorString = contratoDAO.removerContrato(conn, contrato);
+
         } catch (SQLException e) {
             e.printStackTrace();
             errorString = e.getMessage();
@@ -68,20 +69,10 @@ public class DeletarContratoServletController extends HttpServlet {
             Logger.getLogger(DeletarContratoServletController.class.getName()).log(Level.SEVERE, null, ex);
         }
          
-        // If has an error, redirecte to the error page.
-        if (!errorString.contains("sucesso")) {
-            // Store the information in the request attribute, before forward to views.
             request.setAttribute("errorString", errorString);
-            // 
             RequestDispatcher dispatcher = request.getServletContext()
                     .getRequestDispatcher("/WEB-INF/view/erroContratoView.jsp");
             dispatcher.forward(request, response);
-        }
-        // If everything nice.
-        // Redirect to the product listing page.        
-        else {
-            response.sendRedirect(request.getContextPath() + "/jdbcDependente/contratos");
-        }
  
     }
  

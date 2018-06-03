@@ -11,7 +11,7 @@
 <html>
  <head>
     <meta charset="UTF-8">
-    <title>Deletar Contrato</title>
+    <title>Mensagens</title>
  </head>
  
     <body style="background-color: activeborder">
@@ -19,9 +19,6 @@
     <jsp:include page="/template/_header.jsp"></jsp:include>
     <jsp:include page="/template/_menu.jsp"></jsp:include>
     
-    <h3>Página de erro para operações em contratos</h3>
-    <br>
-    <br>
     
     <h3 style="color: red;">${errorString}</h3>
     <br>

@@ -36,10 +36,27 @@ public class ContratoDAO {
          */
         String mensagem = null;
         
+        /*REGRA DE NEGÓCIO: A GESTÃO DE CONTRATOS COM VALOR SUPERIOR A R$ 50.000, 
+        NÃO PODE SER FEITA POR FUNCIONÁRIOS QUE NÃO TENHAM CARGO DE GESTÃO
+        */
+        if(contrato.getFuncionarioGestor().getPapelUsuario().equals("servidor") 
+                && contrato.getOrcamentoComprometido() > 50000 ){
+            
+               mensagem = "REGRA DE NEGÓCIO: \n"
+                + "A GESTÃO DE CONTRATOS COM VALOR SUPERIOR A R$ 50.000, " 
+                +" NÃO PODE SER FEITA POR FUNCIONÁRIOS QUE NÃO TENHAM CARGO DE GESTÃO" ;  
+        
+                
+                return mensagem;
+
+            
+        }else 
+            
         //REGRA DE NEGÓCIO: A GESTÃO DE CONTRATOS SÓ PODE SER FEITA POR FUNCIONÁRIOS ATIVOS NO SISTEMA
         if(contrato.getFuncionarioGestor().isAtivo() == true){
-
-        if (conexao.getUsuarioAtualmenteLogado().getPapelUsuario().equals("gestor")) {
+            
+                 
+            if (conexao.getUsuarioAtualmenteLogado().getPapelUsuario().equals("gestor")) {
 
             String sql = "INSERT INTO tb_contrato("
                     + "objetoContrato, "
@@ -62,20 +79,24 @@ public class ContratoDAO {
 
         } else {
             mensagem = "REGRA DE NEGÓCIO: \n" 
-                       +"UNCIONÁRIO SÓ PODE CRIAR UM CONTRATO SE ELE TIVER PAPEL DE GESTOR NO SISTEMA\n"
+                       +"FUNCIONÁRIO SÓ PODE CRIAR UM CONTRATO SE ELE TIVER PAPEL DE GESTOR NO SISTEMA\n"
                        +"Você não tem permissão para criar contratos no sistema";
         }
         }else{
              mensagem = "REGRA DE NEGÓCIO: \n"
                      + "A GESTÃO DE CONTRATOS SÓ PODE SER FEITA POR FUNCIONÁRIOS ATIVOS NO SISTEMA\n"
                      + "\n"
-                     + "O funcionário ao qual você está tentando atribuir a gestão do contrato não está ativo no sistema" ;  
-        } 
-
+                     + "O funcionário ("+contrato.getFuncionarioGestor().getNome()+")"
+                     + "ao qual você está tentando atribuir a gestão do contrato "
+                     + "não está ativo no sistema" ;  
+        }
+    
+    
         return mensagem;
 
     }
 
+    
     public String editarContrato(Connection conn, Contrato contrato) throws ClassNotFoundException, SQLException {
         
         
@@ -83,11 +104,21 @@ public class ContratoDAO {
         //    REGRA DE NEGÓCIO: FUNCIONÁRIO SÓ PODE EDITAR UM CONTRATO SE ELE FOR GESTOR DO CONTRATO ESPECÍFICO
 
         
+        /*REGRA DE NEGÓCIO: A GESTÃO DE CONTRATOS COM VALOR SUPERIOR A R$ 50.000, 
+        NÃO PODE SER FEITA POR FUNCIONÁRIOS QUE NÃO TENHAM CARGO DE GESTÃO
+        */
+        if(contrato.getFuncionarioGestor().getPapelUsuario().equals("servidor") 
+                && contrato.getOrcamentoComprometido() > 50000 ){
+
+            mensagem = "REGRA DE NEGÓCIO: \n"
+                     + "A GESTÃO DE CONTRATOS COM VALOR SUPERIOR A R$ 50.000, " 
+                     +" NÃO PODE SER FEITA POR FUNCIONÁRIOS QUE NÃO TENHAM CARGO DE GESTÃO" ; 
+            
+            return mensagem;
         
         //REGRA DE NEGÓCIO: A GESTÃO DE CONTRATOS SÓ PODE SER FEITA POR FUNCIONÁRIOS ATIVOS NO SISTEMA
-        if(contrato.getFuncionarioGestor().isAtivo() == true){
+        }else if(contrato.getFuncionarioGestor().isAtivo() == true){
 
-        
         String sql1 = "UPDATE tb_contrato "
                 + "SET objetoContrato = '" + contrato.getObjetoContrato()
                 + "', orcamentoComprometido = " + contrato.getOrcamentoComprometido()
@@ -117,6 +148,7 @@ public class ContratoDAO {
                   + " do contrato não está ativo no sistema" ;  
         
         }
+        
         return mensagem;
         
     }
@@ -139,7 +171,7 @@ public class ContratoDAO {
 
             fabrica.executaQuerieUpdate(conn, sql);
 
-            mensagem = "sucesso";
+            mensagem = "Contrato deletado com sucesso!";
 
         } else {
 
@@ -189,26 +221,15 @@ public class ContratoDAO {
 
     public Contrato findContrato(Connection conn, int id) throws ClassNotFoundException, SQLException {
 
-        /*        
-        REGRA DE NEGÓCIO: FUNCIONÁRIO SÓ PODE ENXERGAR CONTRATOS DO SEU DEPARTAMENTO,
-        EXCETO SE ELE FOR GESTOR. NESTE ÚLTIMO CASO, PODE ENXERGAR CONTRATOS DE OUTROS
-        DEPARTAMENTOS.
-        */
+      
         Contrato contrato = new Contrato();
         String sql = null;
         
-        if(conexao.getUsuarioAtualmenteLogado().getPapelUsuario().equals("gestor")){
             
             sql = "SELECT * FROM tb_contrato WHERE id_contrato = "
                 + id + " ;";
-        }else {
+       
             
-            sql = "SELECT * FROM tb_contrato WHERE id_contrato = "
-                    +id + " AND departamentoResponsavel = '"
-                    +conexao.getUsuarioAtualmenteLogado().getDepartamento()+"';";
-            
-        } 
-        
         ResultSet rs = null;
 
         try{

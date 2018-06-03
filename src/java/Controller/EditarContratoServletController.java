@@ -189,21 +189,13 @@ public class EditarContratoServletController extends HttpServlet {
         request.setAttribute("errorString", errorString);
         request.setAttribute("contrato", contrato);
  
-        // If error, forward to Edit page.
-        if (!errorString.contains("sucesso")) {
         
             RequestDispatcher dispatcher = request.getServletContext()
                     .getRequestDispatcher("/WEB-INF/view/erroContratoView.jsp");
             dispatcher.forward(request, response);
-        }else{
-            
-          RequestDispatcher dispatcher = request.getServletContext()
-                .getRequestDispatcher("/WEB-INF/view/contratosView.jsp");
-        dispatcher.forward(request, response);
 
             
             
         }
-    }
- 
+    
 }

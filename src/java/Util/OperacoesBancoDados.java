@@ -89,7 +89,7 @@ public class OperacoesBancoDados {
 
         String sql6 = "INSERT INTO tb_contrato(objetoContrato, orcamentoComprometido, "
                 + "ATIVO, empresaContratada, departamentoResponsavel, id_FuncionarioGestor) "
-                + "VALUES('Manutenção geral', 300000, true, "
+                + "VALUES('Manutenção geral', 30000, true, "
                 + "'Organizações Tabajara Ltda.', 'Manutenção', "
                 + "2);";
         listaSQLs.add(sql6);
@@ -123,7 +123,7 @@ public class OperacoesBancoDados {
                 + "empresaContratada, "
                 + "departamentoResponsavel, "
                 + "id_funcionarioGestor)"
-                + "VALUES ('Manutenção Predial', 55000, true, 'WCA Ltda.', 'Manutenção', 2);";
+                + "VALUES ('Manutenção Predial', 49000, true, 'WCA Ltda.', 'Manutenção', 2);";
         listaSQLs.add(sql10);
         
         
@@ -134,7 +134,8 @@ public class OperacoesBancoDados {
                 + "empresaContratada, "
                 + "departamentoResponsavel, "
                 + "id_funcionarioGestor)"
-                + "VALUES ('Fornecimento de impressoras multifuncionais', 67000, true, 'Orion Ltda.', 'Departamnto de TI', 1);";
+                + "VALUES ('Fornecimento de impressoras multifuncionais', "
+                + "67000, true, 'Orion Ltda.', 'Departamento de TI', 1);";
         listaSQLs.add(sql11);
         
         String sql12 = "INSERT INTO tb_contrato"
@@ -144,7 +145,8 @@ public class OperacoesBancoDados {
                 + "empresaContratada, "
                 + "departamentoResponsavel, "
                 + "id_funcionarioGestor)"
-                + "VALUES ('Fornecimento de computadores', 2750000, true, 'NETUNO Ltda.', 'Departamnto de TI', 2);";
+                + "VALUES ('Fornecimento de computadores', "
+                + "27500, true, 'NETUNO Ltda.', 'Departamnto de TI', 2);";
         listaSQLs.add(sql12);
 
         Connection conn = null;

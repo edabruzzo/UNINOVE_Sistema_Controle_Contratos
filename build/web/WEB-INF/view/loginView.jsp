@@ -19,7 +19,6 @@
  
       <h3>Login Page</h3>
       
-      <h4>REGRA DE NEGÓCIO = SOMENTE USUÁRIOS ATIVOS PODEM ACESSAR O SISTEMA</h4>
       
       <h4><p style="color: red;">${errorString}</p></h4>
  
