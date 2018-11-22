@@ -3,32 +3,10 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/Emm/Documents/NetBeansProjects/UNINOVE_Sistema_Controle_Contratos/src/java/Controller/CriarContratoServletController.java</file>
-            <file>file:/C:/Users/Emm/Documents/NetBeansProjects/UNINOVE_Sistema_Controle_Contratos/src/java/Util/FiltroJDBC.java</file>
-            <file>file:/C:/Users/Emm/Documents/NetBeansProjects/UNINOVE_Sistema_Controle_Contratos/web/WEB-INF/view/loginView.jsp</file>
-            <file>file:/C:/Users/Emm/Documents/NetBeansProjects/UNINOVE_Sistema_Controle_Contratos/web/WEB-INF/view/deletarContratoView.jsp</file>
-            <file>file:/C:/Users/Emm/Documents/NetBeansProjects/UNINOVE_Sistema_Controle_Contratos/web/WEB-INF/web.xml</file>
-            <file>file:/C:/Users/Emm/Documents/NetBeansProjects/UNINOVE_Sistema_Controle_Contratos/web/WEB-INF/view/contratosView.jsp</file>
-            <file>file:/C:/Users/Emm/Documents/NetBeansProjects/UNINOVE_Sistema_Controle_Contratos/web/homeView.jsp</file>
-            <file>file:/C:/Users/Emm/Documents/NetBeansProjects/UNINOVE_Sistema_Controle_Contratos/web/template/_header.jsp</file>
-            <file>file:/C:/Users/Emm/Documents/NetBeansProjects/UNINOVE_Sistema_Controle_Contratos/src/java/Util/OperacoesBancoDados.java</file>
-            <file>file:/C:/Users/Emm/Documents/NetBeansProjects/UNINOVE_Sistema_Controle_Contratos/src/java/Util/Program.java</file>
-            <file>file:/C:/Users/Emm/Documents/NetBeansProjects/UNINOVE_Sistema_Controle_Contratos/src/java/Controller/DeletarContratoServletController.java</file>
-            <file>file:/C:/Users/Emm/Documents/NetBeansProjects/UNINOVE_Sistema_Controle_Contratos/src/java/Util/FiltroAutenticação.java</file>
-            <file>file:/C:/Users/Emm/Documents/NetBeansProjects/UNINOVE_Sistema_Controle_Contratos/src/java/DAO/ContratoDAO.java</file>
-            <file>file:/C:/Users/Emm/Documents/NetBeansProjects/UNINOVE_Sistema_Controle_Contratos/src/java/Controller/LoginServletController.java</file>
-            <file>file:/C:/Users/Emm/Documents/NetBeansProjects/UNINOVE_Sistema_Controle_Contratos/web/template/_menu.jsp</file>
-            <file>file:/C:/Users/Emm/Documents/NetBeansProjects/UNINOVE_Sistema_Controle_Contratos/src/java/Controller/EditarContratoServletController.java</file>
-            <file>file:/C:/Users/Emm/Documents/NetBeansProjects/UNINOVE_Sistema_Controle_Contratos/web/WEB-INF/view/editarContratoView.jsp</file>
-            <file>file:/C:/Users/Emm/Documents/NetBeansProjects/UNINOVE_Sistema_Controle_Contratos/src/java/DAO/UsuarioDAO.java</file>
-            <file>file:/C:/Users/Emm/Documents/NetBeansProjects/UNINOVE_Sistema_Controle_Contratos/web/WEB-INF/view/usuarioInfoView.jsp</file>
-            <file>file:/C:/Users/Emm/Documents/NetBeansProjects/UNINOVE_Sistema_Controle_Contratos/web/WEB-INF/view/criarContratoView.jsp</file>
-            <file>file:/C:/Users/Emm/Documents/NetBeansProjects/UNINOVE_Sistema_Controle_Contratos/web/template/_footer.jsp</file>
-            <file>file:/C:/Users/Emm/Documents/NetBeansProjects/UNINOVE_Sistema_Controle_Contratos/src/java/Controller/ContratosServletController.java</file>
-            <file>file:/C:/Users/Emm/Documents/NetBeansProjects/UNINOVE_Sistema_Controle_Contratos/web/WEB-INF/view/erroContratoView.jsp</file>
-            <file>file:/C:/Users/Emm/Documents/NetBeansProjects/UNINOVE_Sistema_Controle_Contratos/src/java/Controller/HomeServletController.java</file>
-            <file>file:/C:/Users/Emm/Documents/NetBeansProjects/UNINOVE_Sistema_Controle_Contratos/web/META-INF/context.xml</file>
-            <file>file:/C:/Users/Emm/Documents/NetBeansProjects/UNINOVE_Sistema_Controle_Contratos/src/java/Util/EncodingFilter.java</file>
+            <file>file:/C:/Users/Dell%20E5410/Documents/NetBeansProjects/ATIVIDADE_SEMESTRE/UNINOVE_Sistema_Controle_Contratos/src/java/Util/Program.java</file>
+            <file>file:/C:/Users/Dell%20E5410/Documents/NetBeansProjects/ATIVIDADE_SEMESTRE/UNINOVE_Sistema_Controle_Contratos/web/homeView.jsp</file>
+            <file>file:/C:/Users/Dell%20E5410/Documents/NetBeansProjects/ATIVIDADE_SEMESTRE/UNINOVE_Sistema_Controle_Contratos/web/template/_footer.jsp</file>
+            <file>file:/C:/Users/Dell%20E5410/Documents/NetBeansProjects/ATIVIDADE_SEMESTRE/UNINOVE_Sistema_Controle_Contratos/src/java/Util/OperacoesBancoDados.java</file>
         </group>
     </open-files>
 </project-private>

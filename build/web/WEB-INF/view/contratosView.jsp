@@ -9,7 +9,11 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <meta charset="UTF-8">
+        <meta charset = "utf-8">
+        <meta http-equiv = "X-UA-Compatible" content = "IE = edge">
+        <meta name = "viewport" content = "width = device-width, initial-scale = 1">
+        <!-- Bootstrap -->
+        <link href = "//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css" rel = "stylesheet">
         <title>LISTA CONTRATOS</title>
     </head>
     <body style="background-color: activeborder">
@@ -17,11 +21,11 @@
         <jsp:include page="/template/_header.jsp"></jsp:include>
         <jsp:include page="/template/_menu.jsp"></jsp:include>
 
-      <h3>LISTA DE CONTRATOS</h3>
-      
+            <h3>LISTA DE CONTRATOS</h3>
 
-      <h4 style="color: red;">${errorString}</h4>
-      
+
+            <h4 style="color: red;">${errorString}</h4>
+
         <table border="1" cellpadding="5" cellspacing="1" >
             <tr>
                 <th>Id_Contrato</th>
